@@ -11,12 +11,21 @@ app.get("/", function (req, res) {
 });
 
 app.post("/", function (req, res) {
-  request(
-    "https://apiv2.bitcoinaverage.com/indices/global/ticker/BTCUSD",
-    function (error, response, body) {
-      console.log(body);
-    }
-  );
+  var crypto = req.body.crypto;
+  var fiat = req.body.fiat;
+
+  var baseUrl = "https://apiv2.bitcoinaverage.com/indices/global/ticker/";
+  var finalUrl = baseUrl + crypto + fiat;
+
+  request(finalUrl, function (error, response, body) {
+    console.log(response.statusCode);
+    var data = JSON.parse(body);
+    var btc = data.last;
+
+    res.send(
+      "<h1> The current price of " + crypto + "is " + price + fiat + " USD</h1>"
+    );
+  });
 
   //   console.log(req.body.crypto);
 });
