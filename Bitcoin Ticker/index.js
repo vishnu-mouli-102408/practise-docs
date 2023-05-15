@@ -15,6 +15,7 @@ app.post("/", function (req, res) {
   var fiat = req.body.fiat;
 
   var baseUrl = "https://apiv2.bitcoinaverage.com/indices/global/ticker/";
+  console.log(baseUrl);
   var finalUrl = baseUrl + crypto + fiat;
 
   request(finalUrl, function (error, response, body) {
