@@ -19,6 +19,7 @@ app.post("/", function (req, res) {
   // console.log(baseUrl);
   // var finalUrl = baseUrl + crypto + fiat;
 
+
   var options = {
     url: "https://apiv2.bitcoinaverage.com/convert/global",
     method: "GET",
@@ -31,6 +32,10 @@ app.post("/", function (req, res) {
       "x-ba-key": "MmE2YTBhNzE4MTBjNDAyOGJiNzUxZjY0ZmM4MzE2M2Q",
     },
   };
+
+  var baseUrl = "https://apiv2.bitcoinaverage.com/indices/global/ticker/";
+  var finalUrl = baseUrl + crypto + fiat;
+
 
   request(options, function (error, response, body) {
     // console.log(response.statusCode);
