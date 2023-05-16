@@ -1,6 +1,8 @@
 const express = require("express");
 const request = require("request");
 
+require("dotenv").config();
+
 const app = express();
 const bodyParser = require("body-parser");
 
@@ -32,22 +34,33 @@ app.post("/", function (req, res) {
 
   var jsonData = JSON.stringify(data);
 
+  // console.log(process.env.MY_API_TOKEN);
+
   // console.log(firstName, lastName, emailAddress);
+
+  var obj = "Mouli ";
 
   var options = {
     url: "https://us21.api.mailchimp.com/3.0/lists/86dd96256d",
     method: "POST",
     headers: {
-      Authorization: "Mouli 6854ae848bd9650301cbbb0b39e4dce0-us21",
+      Authorization: obj + process.env.MY_API_TOKEN,
     },
     body: jsonData,
   };
 
   request(options, function (error, response, body) {
     if (error) {
+      res.send("Oops! Something has gone wrong. Please try again.");
       console.log(error);
     } else {
+      if (response.statusCode === 200) {
+        res.send("Successfully Subscribed.");
+      } else {
+        res.send("Oops! Something has gone wrong. Please try again.");
+      }
       console.log(response.statusCode);
+      // console.log(response);
     }
   });
 });
@@ -55,7 +68,5 @@ app.post("/", function (req, res) {
 app.listen(3000, function () {
   console.log("server started running...");
 });
-
-// 6854ae848bd9650301cbbb0b39e4dce0-us21
 
 // 86dd96256d
