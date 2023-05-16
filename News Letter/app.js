@@ -46,7 +46,7 @@ app.post("/", function (req, res) {
     headers: {
       Authorization: obj + process.env.MY_API_TOKEN,
     },
-    // body: jsonData,
+    body: jsonData,
   };
 
   request(options, function (error, response, body) {
@@ -72,7 +72,7 @@ app.post("/failure", function (req, res) {
   res.redirect("/");
 });
 
-app.listen(3000, function () {
+app.listen(process.env.PORT || 3000, function () {
   console.log("server started running...");
 });
 
