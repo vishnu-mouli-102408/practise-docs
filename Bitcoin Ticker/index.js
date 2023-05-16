@@ -2,6 +2,8 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const request = require("request");
 
+require("dotenv").config();
+
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -29,7 +31,7 @@ app.post("/", function (req, res) {
       amount: amount,
     },
     headers: {
-      "x-ba-key": "MmE2YTBhNzE4MTBjNDAyOGJiNzUxZjY0ZmM4MzE2M2Q",
+      "x-ba-key": process.env.MY_API_TOKEN,
     },
   };
 
