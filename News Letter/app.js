@@ -46,23 +46,30 @@ app.post("/", function (req, res) {
     headers: {
       Authorization: obj + process.env.MY_API_TOKEN,
     },
-    body: jsonData,
+    // body: jsonData,
   };
 
   request(options, function (error, response, body) {
     if (error) {
-      res.send("Oops! Something has gone wrong. Please try again.");
-      console.log(error);
+      // res.send("Oops! Something has gone wrong. Please try again.");
+      res.sendFile(__dirname + "/failure.html");
+      // console.log(error);
     } else {
       if (response.statusCode === 200) {
-        res.send("Successfully Subscribed.");
+        res.sendFile(__dirname + "/success.html");
+        // res.send("Successfully Subscribed.");
       } else {
-        res.send("Oops! Something has gone wrong. Please try again.");
+        // res.send("Oops! Something has gone wrong. Please try again.");
+        res.sendFile(__dirname + "/failure.html");
       }
-      console.log(response.statusCode);
+      // console.log(response.statusCode);
       // console.log(response);
     }
   });
+});
+
+app.post("/failure", function (req, res) {
+  res.redirect("/");
 });
 
 app.listen(3000, function () {
