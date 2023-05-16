@@ -27,6 +27,9 @@ app.post("/", function (req, res) {
       to: fiat,
       amount: amount,
     },
+    headers: {
+      "x-ba-key": "MmE2YTBhNzE4MTBjNDAyOGJiNzUxZjY0ZmM4MzE2M2Q",
+    },
   };
 
   request(options, function (error, response, body) {
@@ -38,14 +41,20 @@ app.post("/", function (req, res) {
 
     var currentDate = data.time;
 
-    res.write("<p>the current date is " + currentDate + "</p>");
+    res.write("<h1>Price Conversion from " + crypto + " to " + fiat + "</h1>");
+
+    res.write(
+      "<h1>" + amount + " " + crypto + " = " + price + " " + fiat + " </h1>"
+    );
+
+    res.write("<h2> The Current Date is " + currentDate + "</h2>");
+
     // res.write(
     //   "<h1> The current price of " + crypto + "is " + price + fiat + " USD</h1>"
     // );
 
-    res.write("<h1>" + amount + crypto + "is " + price + fiat + "</h1>");
-
     res.send();
+    // console.log(response.statusCode);
   });
 
   //   console.log(req.body.crypto);
