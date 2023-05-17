@@ -5,6 +5,7 @@ const app = express();
 
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static("public"));
 
 // app.get("/", function (req, res) {
 //   var today = new Date();
@@ -30,24 +31,24 @@ app.use(bodyParser.urlencoded({ extended: true }));
 //   res.render("lists", { kindOfDay: day });
 // });
 
-var foods = ["Buy Food", "Cook Food", "Eat Food"];
+let foods = ["Buy Food", "Cook Food", "Eat Food"];
 
 app.get("/", function (req, res) {
-  var today = new Date();
+  let today = new Date();
 
-  var options = {
+  let options = {
     weekday: "long",
     day: "numeric",
     month: "long",
   };
 
-  var day = today.toLocaleDateString("en-US", options);
+  let day = today.toLocaleDateString("en-US", options);
 
   res.render("lists", { kindOfDay: day, newListItems: foods });
 });
 
 app.post("/", function (req, res) {
-  var food = req.body.newItem;
+  let food = req.body.newItem;
   foods.push(food);
   //   console.log(food);
   //   console.log(req.body);
