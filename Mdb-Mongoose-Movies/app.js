@@ -36,6 +36,7 @@ const directorSchema = new mongoose.Schema({
 
 const Director = mongoose.model("director", directorSchema);
 
+
 // Inserting single the data into the model
 
 // director = new Director({
@@ -69,3 +70,14 @@ Director.insertMany(defaultItem)
   .catch(function (err) {
     console.log(err);
   });
+
+// Inserting the data into the model
+
+// const director = new Director({
+//   name: "Christopher Nolan",
+//   movie: "Oppenheimer",
+//   age: 67,
+// });
+
+// director.save();
+
