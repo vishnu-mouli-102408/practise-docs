@@ -20,4 +20,26 @@ const movies = new Movies({
   review: "It's a great comeback movie",
 });
 
-movies.save();
+// movies.save();
+
+// creating another Schema - Movie Directors
+
+const directorSchema = new mongoose.Schema({
+  name: String,
+  movie: String,
+  age: Number,
+});
+
+// Creating model using Schema
+
+const Director = mongoose.model("director", directorSchema);
+
+// Inserting the data into the model
+
+const director = new Director({
+  name: "Christopher Nolan",
+  movie: "Oppenheimer",
+  age: 67,
+});
+
+director.save();
