@@ -63,12 +63,24 @@ const director2 = new Director({
 
 const defaultItem = [director1, director2];
 
-Director.insertMany(defaultItem)
-  .then(function () {
-    console.log("Successfully saved default items to DB");
+// Director.insertMany(defaultItem)
+//   .then(function () {
+//     console.log("Successfully saved default items to DB");
+//   })
+//   .catch(function (err) {
+//     console.log(err);
+//   });
+
+Director.find()
+  .then(function (x) {
+    // console.log(x);
+    mongoose.connection.close();
+    x.forEach(function (name) {
+      console.log(name.name);
+    });
   })
   .catch(function (err) {
-    console.log(err);
+    console.log("Error");
   });
 
 // Inserting the data into the model
