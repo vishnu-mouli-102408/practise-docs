@@ -29,34 +29,53 @@ const movies1 = new Movies({
   review: "It's a great comeback movie",
 });
 
-const movies2 = new Movies({
-  rating: 4,
-  review: "Awesome",
-});
+// const movies2 = new Movies({
+//   rating: 4,
+//   review: "Awesome",
+// });
 
-const defaultItems = [movies1, movies2];
+// const defaultItems = [movies1, movies2];
 
-Movies.insertMany(defaultItems)
-  .then(function () {
-    console.log("Successfully Added");
-  })
-  .catch(function (err) {
-    console.log(err);
-  });
+// Movies.insertMany(defaultItems)
+//   .then(function () {
+//     console.log("Successfully Added");
+//   })
+//   .catch(function (err) {
+//     console.log(err);
+//   });
 
-// movies.save();
+// movies1.save();
+
+// Movies.updateOne(
+//   { _id: "6468eaa37fe9afdb5e0fa92e" },
+//   { name: "John Wick" }
+// ).then(function (err) {
+//   if (err) {
+//     console.log(err);
+//   } else {
+//     console.log("Successfully Added");
+//   }
+// });
+
+// Movies.deleteOne({ _id: "6468cac012d28fdfbd0d15bf" })
+//   .then(function () {
+//     console.log("Successfully Deleted");
+//   })
+//   .catch(function (err) {
+//     console.log(err);
+//   });
 
 // creating another Schema - Movie Directors
 
-// const directorSchema = new mongoose.Schema({
-//   name: String,
-//   movie: String,
-//   age: Number,
-// });
+const directorSchema = new mongoose.Schema({
+  name: String,
+  movie: String,
+  age: Number,
+});
 
 // Creating model using Schema
 
-// const Director = mongoose.model("director", directorSchema);
+const Director = mongoose.model("director", directorSchema);
 
 // Inserting single the data into the model
 
@@ -113,3 +132,11 @@ Movies.insertMany(defaultItems)
 // });
 
 // director.save();
+
+Director.deleteMany({ name: "Mouli" })
+  .then(function () {
+    console.log("Successfully Deleted");
+  })
+  .catch(function (err) {
+    console.log(err);
+  });
