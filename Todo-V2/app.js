@@ -84,6 +84,18 @@ app.post("/", function (req, res) {
   // }
 });
 
+app.post("/delete", function (req, res) {
+  const checkedId = req.body.checkbox;
+  TodoList.findByIdAndRemove(checkedId)
+    .then(function () {
+      // console.log("Successfully Deleted");
+      res.redirect("/");
+    })
+    .catch(function (err) {
+      console.log("Error! Please try again");
+    });
+});
+
 app.get("/work", function (req, res) {
   const day = date.getDate();
   res.render("list", { listTitle: "Work List", newListItems: workItems });
