@@ -66,18 +66,26 @@ app.get("/", function (req, res) {
 });
 
 app.post("/", function (req, res) {
-  const item = req.body.newItem;
+  const itemName = req.body.newItem;
 
-  if (req.body.list === "Work") {
-    workItems.push(item);
-    res.redirect("/work");
-  } else {
-    items.push(item);
-    res.redirect("/");
-  }
+  const item = new TodoList({
+    name: itemName,
+  });
+
+  item.save();
+
+  res.redirect("/");
+
+  // if (req.body.list === "Work") {
+  //   workItems.push(item);
+  //   res.redirect("/work");
+  // } else {
+
+  // }
 });
 
 app.get("/work", function (req, res) {
+  const day = date.getDate();
   res.render("list", { listTitle: "Work List", newListItems: workItems });
 });
 
