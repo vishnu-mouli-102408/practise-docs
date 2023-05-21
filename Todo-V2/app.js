@@ -105,7 +105,9 @@ app.get("/:customListName", function (req, res) {
 
 app.post("/", function (req, res) {
   const itemName = req.body.newItem;
+  // console.log(itemName);
   const listName = req.body.list;
+  // console.log(listName);
 
   const item = new TodoList({
     name: itemName,
