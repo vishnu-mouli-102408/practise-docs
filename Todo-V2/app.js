@@ -13,6 +13,10 @@ app.use(express.static("public"));
 mongoose.connect("mongodb://127.0.0.1:27017/todoListDB");
 
 const todoListSchema = {
+  // name: {
+  //   type: String,
+  //   required: [true, "Name Required"],
+  // },
   name: String,
 };
 
@@ -32,6 +36,13 @@ const item3 = new TodoList({
 
 const defaultItems = [item1, item2, item3];
 
+const listItemsSchema = {
+  name: String,
+  items: [todoListSchema],
+};
+
+const List = mongoose.model("List", listItemsSchema);
+
 // TodoList.deleteOne({
 //   _id: "6469b555278f84e9149961c4",
 // })
@@ -47,6 +58,7 @@ app.get("/", function (req, res) {
 
   TodoList.find({})
     .then(function (foundItems) {
+      // console.log(foundItems);
       if (foundItems === 0) {
         TodoList.insertMany(defaultItems)
           .then(function () {
@@ -58,6 +70,34 @@ app.get("/", function (req, res) {
         res.redirect("/");
       } else {
         res.render("list", { listTitle: day, newListItems: foundItems });
+      }
+    })
+    .catch(function (err) {
+      console.log("Error! Please try again");
+    });
+});
+
+app.get("/:customListName", function (req, res) {
+  const customListName = req.params.customListName;
+
+  List.findOne({ name: customListName })
+    .then(function (foundList) {
+      if (!foundList) {
+        // Create new List
+        // console.log("Not Exist");
+        const list = new List({
+          name: customListName,
+          items: defaultItems,
+        });
+        list.save();
+        res.redirect("/" + customListName);
+      } else {
+        // Show Existing List
+        // console.log("Exist");
+        res.render("list", {
+          listTitle: foundList.name,
+          newListItems: foundList.items,
+        });
       }
     })
     .catch(function (err) {
