@@ -32,28 +32,37 @@ const item3 = new TodoList({
 
 const defaultItems = [item1, item2, item3];
 
-// TodoList.insertMany(defaultItems)
-//   .then(function () {
-//     console.log("Successfully Inserted");
+// TodoList.deleteOne({
+//   _id: "6469b555278f84e9149961c4",
+// })
+//   .then(function (x) {
+//     console.log(x);
 //   })
 //   .catch(function (err) {
-//     console.log("Error Occurred");
+//     console.log(err);
 //   });
-
-TodoList.deleteOne({
-  _id: "6469b555278f84e9149961c4",
-})
-  .then(function (x) {
-    console.log(x);
-  })
-  .catch(function (err) {
-    console.log(err);
-  });
 
 app.get("/", function (req, res) {
   const day = date.getDate();
 
-  res.render("list", { listTitle: day, newListItems: items });
+  TodoList.find({})
+    .then(function (foundItems) {
+      if (foundItems === 0) {
+        TodoList.insertMany(defaultItems)
+          .then(function () {
+            console.log("Successfully Inserted");
+          })
+          .catch(function (err) {
+            console.log("Error Occurred");
+          });
+        res.redirect("/");
+      } else {
+        res.render("list", { listTitle: day, newListItems: foundItems });
+      }
+    })
+    .catch(function (err) {
+      console.log("Error! Please try again");
+    });
 });
 
 app.post("/", function (req, res) {
