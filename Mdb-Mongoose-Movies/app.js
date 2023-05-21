@@ -24,10 +24,12 @@ const Movies = mongoose.model("movie", movieSchema);
 
 // Step-3 Inserting the data into created collection
 const movies1 = new Movies({
-  name: "Fast X",
+  name: "Mission Impossible",
   rating: 9,
-  review: "It's a great comeback movie",
+  review: "Evergreen Movie ",
 });
+
+movies1.save();
 
 // const movies2 = new Movies({
 //   rating: 4,
@@ -71,6 +73,7 @@ const directorSchema = new mongoose.Schema({
   name: String,
   movie: String,
   age: Number,
+  movieDetails: movieSchema,
 });
 
 // Creating model using Schema
@@ -83,9 +86,18 @@ const Director = mongoose.model("director", directorSchema);
 //   name: "Mouli",
 //   movie: "Fast X",
 //   age: 22,
+//   movieDetails: movies1,
 // });
 
 // director.save();
+
+Director.updateOne({ name: "Rahul" }, { movieDetails: movies1 })
+  .then(function () {
+    console.log("Successfully Updated");
+  })
+  .catch(function (err) {
+    console.log("Error Occurred");
+  });
 
 // Inserting Multiple data into the model
 
@@ -133,10 +145,10 @@ const Director = mongoose.model("director", directorSchema);
 
 // director.save();
 
-Director.deleteMany({ name: "Mouli" })
-  .then(function () {
-    console.log("Successfully Deleted");
-  })
-  .catch(function (err) {
-    console.log(err);
-  });
+// Director.deleteMany({ name: "Mouli" })
+//   .then(function () {
+//     console.log("Successfully Deleted");
+//   })
+//   .catch(function (err) {
+//     console.log(err);
+//   });
