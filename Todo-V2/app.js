@@ -52,10 +52,8 @@ const List = mongoose.model("List", listItemsSchema);
 //   .catch(function (err) {
 //     console.log(err);
 //   });
-
+const day = date.getDate();
 app.get("/", function (req, res) {
-  const day = date.getDate();
-
   TodoList.find({})
     .then(function (foundItems) {
       // console.log(foundItems);
@@ -107,14 +105,22 @@ app.get("/:customListName", function (req, res) {
 
 app.post("/", function (req, res) {
   const itemName = req.body.newItem;
+  const listName = req.body.list;
 
   const item = new TodoList({
     name: itemName,
   });
 
-  item.save();
-
-  res.redirect("/");
+  if (listName === day) {
+    item.save();
+    res.redirect("/");
+  } else {
+    List.findOne({ name: listName }).then(function (foundList) {
+      foundList.items.push(item);
+      foundList.save();
+      res.redirect("/" + listName);
+    });
+  }
 
   // if (req.body.list === "Work") {
   //   workItems.push(item);
