@@ -4,6 +4,8 @@ const mongoose = require("mongoose");
 const date = require(__dirname + "/date.js");
 const _ = require("lodash");
 
+require("dotenv").config();
+
 const app = express();
 
 app.set("view engine", "ejs");
@@ -11,7 +13,7 @@ app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
-mongoose.connect("mongodb://127.0.0.1:27017/todoListDB");
+mongoose.connect(process.env.SERVER_URL);
 
 const todoListSchema = {
   // name: {
@@ -58,7 +60,7 @@ app.get("/", function (req, res) {
   TodoList.find({})
     .then(function (foundItems) {
       // console.log(foundItems);
-      if (foundItems === 0) {
+      if (foundItems.length === 0) {
         TodoList.insertMany(defaultItems)
           .then(function () {
             console.log("Successfully Inserted");
