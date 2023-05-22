@@ -4,6 +4,8 @@ const mongoose = require("mongoose");
 const date = require(__dirname + "/date.js");
 const _ = require("lodash");
 
+require("dotenv").config();
+
 const app = express();
 
 app.set("view engine", "ejs");
@@ -11,9 +13,7 @@ app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
-mongoose.connect(
-  "mongodb+srv://admin-mouli:Test102408@cluster0.s21etby.mongodb.net/todoListDB"
-);
+mongoose.connect(process.env.SERVER_URL);
 
 const todoListSchema = {
   // name: {
