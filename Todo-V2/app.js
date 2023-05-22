@@ -11,7 +11,9 @@ app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
-mongoose.connect("mongodb://127.0.0.1:27017/todoListDB");
+mongoose.connect(
+  "mongodb+srv://admin-mouli:Test102408@cluster0.s21etby.mongodb.net/todoListDB"
+);
 
 const todoListSchema = {
   // name: {
@@ -58,7 +60,7 @@ app.get("/", function (req, res) {
   TodoList.find({})
     .then(function (foundItems) {
       // console.log(foundItems);
-      if (foundItems === 0) {
+      if (foundItems.length === 0) {
         TodoList.insertMany(defaultItems)
           .then(function () {
             console.log("Successfully Inserted");
