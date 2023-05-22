@@ -2,6 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const date = require(__dirname + "/date.js");
+const _ = require("lodash");
 
 const app = express();
 
@@ -76,7 +77,7 @@ app.get("/", function (req, res) {
 });
 
 app.get("/:customListName", function (req, res) {
-  const customListName = req.params.customListName;
+  const customListName = _.capitalize(req.params.customListName);
 
   List.findOne({ name: customListName })
     .then(function (foundList) {
@@ -134,14 +135,30 @@ app.post("/", function (req, res) {
 
 app.post("/delete", function (req, res) {
   const checkedId = req.body.checkbox;
-  TodoList.findByIdAndRemove(checkedId)
-    .then(function () {
-      // console.log("Successfully Deleted");
-      res.redirect("/");
-    })
-    .catch(function (err) {
-      console.log("Error! Please try again");
-    });
+  const listName = req.body.list;
+
+  if (listName === day) {
+    TodoList.findByIdAndRemove(checkedId)
+      .then(function () {
+        // console.log("Successfully Deleted");
+        res.redirect("/");
+      })
+      .catch(function (err) {
+        console.log("Error! Please try again");
+      });
+  } else {
+    List.findOneAndUpdate(
+      { name: listName },
+      { $pull: { items: { _id: checkedId } } }
+    )
+      .then(function () {
+        // console.log("Successfully Deleted");
+        res.redirect("/" + listName);
+      })
+      .catch(function (err) {
+        console.log("Error! Please try again");
+      });
+  }
 });
 
 // app.get("/work", function (req, res) {
