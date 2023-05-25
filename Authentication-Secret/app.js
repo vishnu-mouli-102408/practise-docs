@@ -1,6 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const ejs = require("ejs");
+const mongoose = require("mongoose");
 
 const app = express();
 
@@ -12,6 +13,15 @@ app.use(
   })
 );
 app.use(express.static("public"));
+
+mongoose.connect("mongodb://127.0.0.1:27017/userDB");
+
+const userSchema = {
+  email: String,
+  password: String,
+};
+
+const User = new mongoose.model("User", userSchema);
 
 app.get("/", function (req, res) {
   res.render("home");
