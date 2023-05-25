@@ -118,6 +118,20 @@ app
       .catch(function (err) {
         res.send(err);
       });
+  })
+
+  .put(function (req, res) {
+    Article.update(
+      { title: req.params.articleTitle },
+      { title: req.body.title, content: req.body.content },
+      { overwrite: true }
+    )
+      .then(function () {
+        res.send("Article Updated");
+      })
+      .catch(function (err) {
+        res.send(err);
+      });
   });
 
 app.listen(3000, function () {
