@@ -20,6 +20,8 @@ const articleSchema = {
 
 Article = mongoose.model("Article", articleSchema);
 
+/////////////////// Request Targetting All Articles ///////////////////
+
 // app.get("/articles", function (req, res) {
 //   Article.find()
 //     .then(function (foundItems) {
@@ -97,6 +99,21 @@ app
     Article.deleteMany()
       .then(function () {
         res.send("Articles Deleted");
+      })
+      .catch(function (err) {
+        res.send(err);
+      });
+  });
+
+/////////////////// Request Targetting A Specfic  Article ///////////////////
+
+app
+  .route("/articles/:articleTitle")
+
+  .get(function (req, res) {
+    Article.findOne({ title: req.params.articleTitle })
+      .then(function (foundArticle) {
+        res.send(foundArticle);
       })
       .catch(function (err) {
         res.send(err);
