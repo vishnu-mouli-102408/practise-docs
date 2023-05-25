@@ -132,6 +132,16 @@ app
       .catch(function (err) {
         res.send(err);
       });
+  })
+
+  .patch(function (req, res) {
+    Article.update({ title: req.params.articleTitle }, { $set: req.body })
+      .then(function () {
+        res.send("Article Updated Successfully");
+      })
+      .catch(function (err) {
+        res.send(err);
+      });
   });
 
 app.listen(3000, function () {
