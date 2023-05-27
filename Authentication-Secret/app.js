@@ -22,7 +22,7 @@ app.use(express.static("public"));
 
 app.use(
   session({
-    secret: "This is my little secret.",
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
   })
