@@ -1,1 +1,1 @@
-# This repository contains all the practise programs with the source code on web development.
+# This repository contains all the practise programs source code on web development.
